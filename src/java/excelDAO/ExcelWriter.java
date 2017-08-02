@@ -29,7 +29,8 @@ public class ExcelWriter {
             ChartAxis bottomAxis = chart.getChartAxisFactory().createCategoryAxis(AxisPosition.BOTTOM);
             ValueAxis leftAxis = chart.getChartAxisFactory().createValueAxis(AxisPosition.LEFT);
             leftAxis.setCrosses(AxisCrosses.AUTO_ZERO);
-            ChartDataSource<Number> xs = DataSources.fromNumericCellRange(sheet, new CellRangeAddress(0, 0, 1, dataHolder.getSizesOfArrays().length));
+            ChartDataSource<Number> xs = DataSources.fromNumericCellRange(sheet, new CellRangeAddress(0, 0, 0, dataHolder.getSizesOfArrays().length));
+
             Row serviseRow = sheet.createRow(0);
 
             for (int l = 0; l < dataHolder.getSizesOfArrays().length ; l++) {

@@ -3,7 +3,7 @@ import testSortMethods.TestSortMethods;
 
 public class AppRunner {
     public static void main(String[] args) {
-        int[] sizesOfArrays={40000,60000,80000,100000};
+        int[] sizesOfArrays={4000,6000,8000,10000};
         TestSortMethods test = new TestSortMethods(sizesOfArrays);
         test.conducTesting();
         ExcelWriter excelWriter = new ExcelWriter();

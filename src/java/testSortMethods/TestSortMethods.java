@@ -41,11 +41,11 @@ public class TestSortMethods {
                     try {
                         testArray = (int[])fillerMehtods[i].invoke(instansFiller, sizesArrays[k]);
                     }catch (IllegalAccessException|InvocationTargetException e){}
-                    long startTime = System.currentTimeMillis();
+                    long startTime = System.nanoTime();
                     try {
                         sortMethods[j].invoke(instansSorter,testArray);
                     }catch (IllegalAccessException|InvocationTargetException e){}
-                    long finishTime = System.currentTimeMillis();
+                    long finishTime = System.nanoTime();
                     rethult[i][j][k] = finishTime-startTime;
                 }
             }
