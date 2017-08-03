@@ -29,15 +29,20 @@ public class ExcelWriter {
             ChartAxis bottomAxis = chart.getChartAxisFactory().createCategoryAxis(AxisPosition.BOTTOM);
             ValueAxis leftAxis = chart.getChartAxisFactory().createValueAxis(AxisPosition.LEFT);
             leftAxis.setCrosses(AxisCrosses.AUTO_ZERO);
-            ChartDataSource<Number> xs = DataSources.fromNumericCellRange(sheet, new CellRangeAddress(0, 0, 0, dataHolder.getSizesOfArrays().length));
+            ChartDataSource<Number> xAxis = DataSources.fromNumericCellRange(sheet, new CellRangeAddress(0, 0, 0, dataHolder.getSizesOfArrays().length));
 
-            Row serviseRow = sheet.createRow(0);
+            Row rowWithArraySizes = sheet.createRow(0);
 
-            for (int l = 0; l < dataHolder.getSizesOfArrays().length ; l++) {
-                Cell cell = serviseRow.createCell(l+1);
-                cell.setCellValue(dataHolder.getSizesOfArrays()[l]);
+            for (int l = 0; l < dataHolder.getSizesOfArrays().length+1 ; l++) {
+                if(l == 0){
+                    Cell cell = rowWithArraySizes.createCell(l);
+                    cell.setCellValue("Sizes of arrays");
+
+                }else {
+                    Cell cell = rowWithArraySizes.createCell(l);
+                    cell.setCellValue(dataHolder.getSizesOfArrays()[l-1]);
+                }
             }
-
             for (int j = 0; j < dataHolder.getTestTime()[i].length; j++) {
                 Row row = sheet.createRow(j+1);
                 for (int k = 0; k < dataHolder.getTestTime()[i][j].length; k++) {
@@ -48,9 +53,9 @@ public class ExcelWriter {
                     Cell cell = row.createCell(k + 1);
                     cell.setCellValue(dataHolder.getTestTime()[i][j][k]);
                 }
-                ChartDataSource<Number> ys1 = DataSources.fromNumericCellRange(sheet, new CellRangeAddress(row.getRowNum(),row.getRowNum(), 0, dataHolder.getTestTime()[i][j].length));
-                data.addSeries(xs, ys1);
-
+                ChartDataSource<Number> yAxis = DataSources.fromNumericCellRange(sheet, new CellRangeAddress(row.getRowNum(),row.getRowNum(), 0, dataHolder.getTestTime()[i][j].length));
+                LineChartSeries chartSeries = data.addSeries(xAxis,yAxis);
+                chartSeries.setTitle(dataHolder.getNamesOfSortedMethods().get(j));
             }
             chart.plot(data, bottomAxis, leftAxis);
         }
